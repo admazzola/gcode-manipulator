@@ -1,0 +1,17 @@
+{
+  "name": "gcode-manipulator",
+  "version": "1.0.0",
+  "description": "Inputs GCode and outputs data for Logix5000",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "keywords": [
+    "gcode"
+  ],
+  "author": "admazzola",
+  "license": "MIT",
+  "dependencies": {
+    "gcode-parser": "^1.1.1"
+  }
+}
