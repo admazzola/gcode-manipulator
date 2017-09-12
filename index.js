@@ -36,8 +36,41 @@ function parseGCodeAtPath(file_path)
 {
     let abs_file_path = require('path').resolve(__dirname, file_path);
 
-    console.log( abs_file_path )
+        console.log( abs_file_path )
+
+      var contents = fs.readFileSync(abs_file_path, 'utf8');
+      console.log(contents);
+
+      var gcode_array = contents.split('\n').filter(Boolean); //filter for truthy values
+      console.log(gcode_array);
+
+      var gcommand_array = gcode_array.map(function(n) {
+             return getGCommandFromGCode(n);
+          } )
 }
+
+function getGCommandFromGCode(gcode_line)
+{
+    let gcommand = {};
+      var gcodeSegments = gcode_line.split(' ');
+    //  console.log(gcodeSegments)
+
+      let segment_array =  gcodeSegments.map(function(seg) {
+             return {letter:seg.substring(0,1) , value: seg.substring(1) };
+          } )
+
+          for (seg of segment_array)
+          {
+            gcommand[seg.letter] = seg.value
+          }
+
+
+          console.log(gcommand)
+
+    return gcommand;
+}
+
+
 
 
 function throwInvalidArgsError()
