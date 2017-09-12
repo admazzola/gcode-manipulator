@@ -24,6 +24,12 @@ switch (primary_arg.toLowerCase()) {
     parseGCodeAtPath(secondary_arg)
     //Statements executed when the result of expression matches value2
     break;
+  case 'writeArray':
+
+      var parsed_code = parseGCodeAtPath(secondary_arg)
+      writeArrayForGCode(parsed_code)
+      //Statements executed when the result of expression matches value2
+      break;
 
 
   default:
@@ -70,13 +76,15 @@ function getGCommandFromGCode(gcode_line)
 
           }
 
-
           console.log(gcommand)
 
     return gcommand;
 }
 
-
+function writeArrayForGCode(parsedGCode)
+{
+  
+}
 
 
 function throwInvalidArgsError()
