@@ -15,8 +15,9 @@ if (typeof primary_arg == 'undefined')
 
 switch (primary_arg.toLowerCase()) {
   case 'help':
-    let help_text = 'Valid commands:'
-
+    let help_text = 'Valid commands:' + '\n'
+    help_text += "parse - " + '\n'
+    help_text += "writeArray - " + '\n'
     console.log(help_text)
     break;
   case 'parse':
@@ -24,7 +25,7 @@ switch (primary_arg.toLowerCase()) {
     parseGCodeAtPath(secondary_arg)
     //Statements executed when the result of expression matches value2
     break;
-  case 'writeArray':
+  case 'writearray':
 
       var parsed_code = parseGCodeAtPath(secondary_arg)
       writeArrayForGCode(parsed_code)
@@ -53,6 +54,8 @@ function parseGCodeAtPath(file_path)
       var gcommand_array = gcode_array.map(function(n) {
              return getGCommandFromGCode(n);
           } )
+
+          return gcommand_array;
 }
 
 function getGCommandFromGCode(gcode_line)
@@ -83,7 +86,26 @@ function getGCommandFromGCode(gcode_line)
 
 function writeArrayForGCode(parsedGCode)
 {
-  
+
+  let abs_file_path = require('path').resolve(__dirname, "logix_output");
+
+  let outputGCode = parsedGCode.map(function(n) {
+         return [n.g,n.x,n.y,n.z,n.m,n.f,n.p].map( function(i){ return formatCodeArrayCell(i)  })
+      } )
+
+  fs.writeFileSync(abs_file_path, JSON.stringify(outputGCode) );
+
+
+
+}
+
+function formatCodeArrayCell(i)
+{
+  if(typeof i == 'undefined')
+  {
+    return 0;
+  }
+  return parseFloat(i);
 }
 
 
