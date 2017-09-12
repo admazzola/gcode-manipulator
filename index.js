@@ -56,12 +56,18 @@ function getGCommandFromGCode(gcode_line)
     //  console.log(gcodeSegments)
 
       let segment_array =  gcodeSegments.map(function(seg) {
-             return {letter:seg.substring(0,1) , value: seg.substring(1) };
+             return {letter:seg.substring(0,1).toLowerCase() , value: seg.substring(1) };
           } )
 
           for (seg of segment_array)
           {
-            gcommand[seg.letter] = seg.value
+            if(seg.letter == 'g')
+            {
+              gcommand[seg.letter] = parseInt(seg.value)
+            }else {
+              gcommand[seg.letter] = seg.value
+            }
+
           }
 
 
